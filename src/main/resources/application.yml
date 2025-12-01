@@ -1,0 +1,9 @@
+bfhl:
+  generate-url: https://bfhldevapigw.healthrx.co.in/hiring/generateWebhook/JAVA
+  test-url:     https://bfhldevapigw.healthrx.co.in/hiring/testWebhook/JAVA
+  name:         John Doe
+  regNo:        REG12347
+  email:        john@example.com
+
+app:
+  work-dir: ./work
