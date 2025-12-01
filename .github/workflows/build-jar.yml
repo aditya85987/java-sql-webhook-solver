@@ -1,7 +1,7 @@
 name: Build Spring Boot JAR
 
 on:
-  workflow_dispatch:   # allows you to run it manually from Actions tab
+  workflow_dispatch:
   push:
     branches: [ "main" ]
 
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -18,11 +18,12 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+          cache: maven
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B -e -X clean package
 
-      - name: Upload JAR as artifact
+      - name: Upload Built JAR
         uses: actions/upload-artifact@v4
         with:
           name: spring-boot-jar
