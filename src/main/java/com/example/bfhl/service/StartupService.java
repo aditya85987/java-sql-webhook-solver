@@ -108,16 +108,19 @@ public class StartupService implements ApplicationRunner {
         return Integer.parseInt(lastTwoStr);
     }
 
-    private String findSqlInText(String text) {
-        if (text == null || text.isBlank()) return null;
-        Pattern p = Pattern.compile("((?m)^(SELECT|WITH|INSERT|UPDATE|DELETE)[\s\S]{0,2000}?;?)", Pattern.CASE_INSENSITIVE);
-        Matcher m = p.matcher(text);
-        StringBuilder sb = new StringBuilder();
-        while (m.find()) {
-            sb.append(m.group(1)).append(System.lineSeparator());
-        }
-        String candidate = sb.toString().trim();
-        if (candidate.isEmpty()) return null;
-        return candidate;
+   private String findSqlInText(String text) {
+    if (text == null || text.isBlank()) return null;
+    // Note: in Java string literals backslashes must be escaped,
+    // so \s becomes \\s and \S becomes \\S inside the quoted string.
+    Pattern p = Pattern.compile("((?m)^(SELECT|WITH|INSERT|UPDATE|DELETE)[\\\\s\\\\S]{0,2000}?;?)", Pattern.CASE_INSENSITIVE);
+    Matcher m = p.matcher(text);
+    StringBuilder sb = new StringBuilder();
+    while (m.find()) {
+        sb.append(m.group(1)).append(System.lineSeparator());
     }
+    String candidate = sb.toString().trim();
+    if (candidate.isEmpty()) return null;
+    return candidate;
+}
+
 }
