@@ -113,6 +113,7 @@ public class StartupService implements ApplicationRunner {
     // Backslashes must be escaped in Java string literals:
     // \s -> \\s and \S -> \\S so the runtime regex becomes [\s\S]
     Pattern p = Pattern.compile("((?m)^(SELECT|WITH|INSERT|UPDATE|DELETE)[\\\\s\\\\S]{0,2000}?;?)", Pattern.CASE_INSENSITIVE);
+
     Matcher m = p.matcher(text);
     StringBuilder sb = new StringBuilder();
     while (m.find()) {
